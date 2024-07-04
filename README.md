@@ -1,41 +1,44 @@
-NSX - Power Up Kit 는 기존 NSX 의 추가 데이터 수집을 위해 개발되었습니다. NSX 버전 변경으로 API 가 변경된다면 의도한 대로 작동하지 않을 수 있습니다.
-사전에 API Request Limit 및 현재 호출되고 있는 API Request 를 확인하고, 예상 API Request 수를 확인 후 적용이 필요합니다.
-NSX API Request Counts = 4 + (Load Balancer Service * 1) + (Load Balancer Virtual Server * 1) + (Load Balancer Pool * 3)
+Name: Expansion Pack for vCenter <br>
+Author: dongyun.heo <br>
+Version: 24.7.4 <br> <br>
 
-Release Note - Version number : 24.5.21 Tested Aira Operations Version: 8.17.1.23642243, NSX Version: 4.1.2.3.0.23382408
+API Information <br>
+Infrastructure JSON API <br>
+https://developer.broadcom.com/xapis/virtual-infrastructure-json-api/latest/ <br> <br>
 
-Requests
-GET /policy/api/v1/transport-nodes
-GET /policy/api/v1/infra/lb-services
-GET /policy/api/v1/infra/lb-virtual-servers
-GET /policy/api/v1/infra/lb-virtual-servers/{lb-virtual-server-id}
-GET /policy/api/v1/infra/lb-pools
-GET /policy/api/v1/infra/lb-services/{lb-service-id}
-GET /policy/api/v1/infra/lb-pools/{lb-pool-id}
-GET /policy/api/v1/infra/lb-services/{lb-service-id}/lb-pools/{lb-pool-id}/statistics
-GET /policy/api/v1/infra/lb-services/{lb-service-id}/lb-pools/{lb-pool-id}/detailed-status
 
-Objects
-[ARIA_OPS] NSX Transport Node: Node Size
-[ARIA_OPS] Load Balancer Service: Size
-[ARIA_OPS] Load Balancer Virtual Server: IP Address, Access Log Enabled, Application Profile Path
-[ARIA_OPS] Load Balancer Pool: Algorithm, SNAT Translation Type, TCP Multiplexing Enabled, TCP Multiplexing Number, Min Active Members, Path
-[INTERNAL] Load Balancer Pool Member: IP Address, Port, Status, Last State Change Time, LB Service ID, LB POOL ID, Pool Path, Current Sessions, Max Sessions, Total Sessions, Current Session Rate, Bytes In, Bytes Out, Bytes In Rate, Bytes Out Rate, HTTP Request Rate, HTTP Requests
-[INTERNAL] Load Balancer Virtual Server Port: Port
+Tested Solutions <br>
+Aira Operations Version: <br>
+8.17.1.23642243 <br> <br>
 
-Relationships
-Load Balancer Virtual Server -> Load Balancer Virtual Server Port
-Load Balancer Pool -> Load Balancer Pool Member
-Load Balancer Pool Member -> Virtual Machine
+vCenter Version:  <br>
+8.0.2.23319993 <br> <br>
 
-Content
-[SUPER_METRIC] EDGE Cluster - Tier-0 Count
-[SUPER_METRIC] EDGE Cluster - Tier-1 Count
-[SUPER_METRIC] EDGE Cluster - Peak Edge Node CPU Highest Usage
-[SUPER_METRIC] EDGE Cluster - Peak Edge Node Memory Usage
-[SUPER_METRIC] EDGE Cluster - LB CPU Usage
-[SUPER_METRIC] EDGE Cluster - LB Memory Usage
-[SUPER_METRIC] EDGE Cluster - LB Count
-[SUPER_METRIC] EDGE - Node Memory Usage
-[SUPER_METRIC] EDGE - LB Capacity Usage
-[SUPER_METRIC] LB - Pool Member Count
+Requests <br>
+GET Folder/group-d1/childEntity <br>
+GET Datacenter/${datacenter_id}/hostFolder <br>
+GET Datacenter/${datacenter_id}/networkFolder <br>
+GET Folder/${host_folder_id}/childEntity <br>
+GET Folder/${network_folder_id}/childEntity <br>
+GET ClusterComputeResource/${cluster_id}/host <br>
+GET Folder/${child_folder_id}/childEntity <br>
+POST DistributedVirtualSwitch/${dvs_id}/FetchDVPorts <br>
+GET HostSystem/${host_id}/summary <br>
+GET HostSystem/${host_id}/configManager <br>
+GET HostNetworkSystem/${host_network_system_id}/networkInfo <br> <br>
+
+Objects <br>
+[INTERNAL] Host System Distributed Switch <br>
+[INTERNAL] Folder Distributed Virtual Switch Uplink Port <br>
+[INTERNAL] Distributed Virtual Switch Uplink Port <br>
+[INTERNAL] Standard Virtual Switch Uplink Port <br> <br>
+
+
+Relationships <br>
+Host System -> Host System Distributed Switch <br>
+Host System -> Standard Virtual Switch Uplink Port <br>
+Host System Distributed Switch -> Distributed Virtual Switch Uplink Port <br>
+Host System Distributed Switch -> Folder Distributed Virtual Switch Uplink Port <br> <br>
+
+Content <br>
+
